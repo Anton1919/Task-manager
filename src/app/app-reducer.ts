@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-type InitialStateType = {
+export type InitialStateType = {
 	status: RequestStatusType
 	error: null | string
 }

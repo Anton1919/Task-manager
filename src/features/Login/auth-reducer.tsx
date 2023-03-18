@@ -62,8 +62,8 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
 	try {
 		const res = await authAPI.logout()
 		if (res.resultCode === 0) {
-			dispatch(setIsLoggedInAC({value: true}))
-			dispatch(setAppStatusAC({status:'loading'}))
+			dispatch(setIsLoggedInAC({value: false}))
+			dispatch(setAppStatusAC({status:'succeeded'}))
 		} else {
 			handleServerAppError(res, dispatch)
 		}
