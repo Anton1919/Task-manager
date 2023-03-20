@@ -7,7 +7,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {useFormik} from "formik";
+import {FormikHelpers, useFormik} from "formik";
 import {loginTC} from "./auth-reducer";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {Navigate} from "react-router-dom";
@@ -50,14 +50,20 @@ export const Login = () => {
 			}
 			return errors
 		},
-		onSubmit: values => {
-			dispatch(loginTC(values))
+		onSubmit: async (values: FormDataType, formikHelpers: FormikHelpers<FormDataType>) => {
+			const action = await dispatch(loginTC(values))
+			if (loginTC.rejected.match(action)) {
+				if (action.payload?.someError) {
+					const error = action.payload?.someError
+					formikHelpers.setFieldError("email", "fake error")
+				}
+			}
 			formik.resetForm()
 		}
 	})
 
 	if (isLoggedIn) {
-		return <Navigate to={'/'} />
+		return <Navigate to={'/'}/>
 	}
 
 	return <Grid container justifyContent={'center'}>
@@ -90,7 +96,8 @@ export const Login = () => {
 							{...formik.getFieldProps('password')}
 						/>
 
-						{formik.errors.password&& formik.touched.password && <div style={{color: 'red'}}>{formik.errors.password}</div>}
+						{formik.errors.password && formik.touched.password &&
+                <div style={{color: 'red'}}>{formik.errors.password}</div>}
 
 						<FormControlLabel label={'Remember me'} control={
 							<Checkbox
