@@ -4,18 +4,18 @@ import {TodolistsList} from '../features/TodolistsList/TodolistsList'
 import {useAppDispatch, useAppSelector} from './store'
 import {RequestStatusType} from './app-reducer'
 import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import {CircularProgress} from "@mui/material";
 import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
 import LinearProgress from '@mui/material/LinearProgress';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import {Menu} from '@mui/icons-material';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar'
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "../features/Login/Login";
 import {logoutTC, meTC} from "../features/Login/auth-reducer";
-import {CircularProgress} from "@mui/material";
 
 function App() {
 	const status = useAppSelector<RequestStatusType>((state) => state.app.status)
